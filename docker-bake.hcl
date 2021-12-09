@@ -4,6 +4,6 @@ target "default" {
         "linux/arm64"
     ]
     tags = [
-        "inviqa/chromium:latest"
+        "quay.io/inviqa_images/chromium:latest"
     ]
 }

@@ -25,7 +25,7 @@ pipeline {
         stage('Publish') {
             environment {
                 DOCKER_REGISTRY_CREDS = credentials('docker-registry-credentials')
-                DOCKER_REGISTRY = 'docker.io'
+                DOCKER_REGISTRY = 'quay.io'
             }
             when {
                 branch 'main'
