@@ -2,7 +2,7 @@
 FROM debian:bullseye-slim
 
 RUN <<EOF
-set -o errexit -o nounset -o pipefail
+set -o errexit -o nounset
 apt-get update -qq
 DEBIAN_FRONTEND=noninteractive apt-get -qq -y --no-install-recommends install \
   ca-certificates \
