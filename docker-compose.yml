@@ -1,0 +1,4 @@
+services:
+  chromium:
+    build: .
+    image: quay.io/inviqa_images/chromium:latest${TAG_SUFFIX:-}
