@@ -13,7 +13,7 @@ apk add --no-cache \
   ttf-dejavu \
   ttf-liberation \
   ttf-opensans
-adduser -D -H headless
+adduser -D headless
 mkdir /data && chown -R headless:headless /data
 EOF
 
