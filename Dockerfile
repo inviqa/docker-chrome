@@ -1,19 +1,15 @@
 # syntax=docker/dockerfile:1.3-labs
-FROM alpine:latest
+FROM debian:bullseye-slim
 
 RUN <<EOF
-apk add --no-cache \
+set -o errexit -o nounset
+apt-get update -qq
+DEBIAN_FRONTEND=noninteractive apt-get -qq -y --no-install-recommends install \
   ca-certificates \
   chromium \
-  chromium-swiftshader \
-  font-croscore \
-  font-noto-cjk \
-  font-noto-emoji \
-  tini \
-  ttf-dejavu \
-  ttf-liberation \
-  ttf-opensans
-adduser -D headless
+  dumb-init \
+  ttf-wqy-zenhei
+useradd headless --shell /bin/bash --create-home
 mkdir /data && chown -R headless:headless /data
 EOF
 
@@ -21,8 +17,8 @@ USER headless
 
 EXPOSE 9222
 
-ENTRYPOINT ["/sbin/tini", "--", \
-            "/usr/bin/chromium-browser", \
+ENTRYPOINT ["/usr/bin/dumb-init", "--", \
+            "/usr/bin/chromium", \
             "--disable-gpu", \
             "--headless", \
             "--no-sandbox", \
