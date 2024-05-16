@@ -1,7 +1,12 @@
 services:
   chromium:
-    build: .
-    image: quay.io/inviqa_images/chromium:latest${TAG_SUFFIX:-}
+    build: 
+      context: .
+      args:
+        DISTRO_CODENAME: bookworm
+      tags:
+        - quay.io/inviqa_images/chromium:latest${TAG_SUFFIX:-}
+    image: quay.io/inviqa_images/chromium:bookworm${TAG_SUFFIX:-}
 
   test:
     build:
@@ -9,3 +14,5 @@ services:
       dockerfile: Dockerfile.test
     links:
       - chromium:chromium
+    profiles:
+      - test
