@@ -2,3 +2,9 @@ services:
   chromium:
     build: .
     image: quay.io/inviqa_images/chromium:latest${TAG_SUFFIX:-}
+
+  test:
+    image: curlimages/curl:latest
+    command: --verbose --fail http://chromium:9222/json/version
+    links:
+      - chromium:chromium

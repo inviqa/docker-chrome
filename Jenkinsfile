@@ -27,10 +27,16 @@ pipeline {
                                     sh 'docker-compose build'
                                 }
                             }
+                            stage('Test') {
+                                steps {
+                                    sh 'docker-compose run test'
+                                }
+                            }
                             stage('Publish') {
                                 environment {
                                     DOCKER_REGISTRY_CREDS = credentials('docker-registry-credentials')
                                     DOCKER_REGISTRY = 'quay.io'
+                                    BUILD = 'chromium'
                                 }
                                 when {
                                     branch 'main'
