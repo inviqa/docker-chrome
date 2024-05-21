@@ -4,7 +4,9 @@ services:
     image: quay.io/inviqa_images/chromium:latest${TAG_SUFFIX:-}
 
   test:
-    image: curlimages/curl:latest
-    command: --verbose --fail http://chromium:9222/json/version
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    # command: "curl --verbose --fail --header 'Host: 127.0.0.1' http://chromium:9222/json/version"
     links:
       - chromium:chromium

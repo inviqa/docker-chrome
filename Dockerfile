@@ -8,6 +8,7 @@ apt-get upgrade -qq -y
 DEBIAN_FRONTEND=noninteractive apt-get -qq -y --no-install-recommends install \
   ca-certificates \
   chromium \
+  curl \
   dumb-init \
   socat \
   ttf-wqy-zenhei
@@ -26,5 +27,5 @@ EXPOSE 9222
 
 ENTRYPOINT /usr/bin/dumb-init -- /bin/bash -c \
   '/usr/bin/chromium --disable-gpu --headless --no-sandbox --disable-dev-shm-usage --remote-debugging-port=9223 --user-data-dir=/data & \
-  (wait-for 127.0.0.1:9222 && /usr/bin/socat -v TCP4-LISTEN:9222,fork,reuseaddr TCP4:127.0.0.1:9223) & \
+  (/usr/local/bin/wait-for 127.0.0.1:9223 && /usr/bin/socat -v TCP4-LISTEN:9222,fork,reuseaddr TCP4:127.0.0.1:9223) & \
   wait'
