@@ -7,6 +7,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-    # command: "curl --verbose --fail --header 'Host: 127.0.0.1' http://chromium:9222/json/version"
     links:
       - chromium:chromium
