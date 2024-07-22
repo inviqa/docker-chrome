@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e -o pipefail
+
+# wait for http service
+function task_http_wait() {
+    echo -e "Waiting for http service $1 to be available"
+
+    local counter=0
+
+    while ! curl --fail --silent --show-error --location --insecure --output /dev/null "$@"; do
+
+        if (( counter > 60 )); then
+            echo "timeout while waiting on $1 to become available" >&2
+            exit 1
+        fi
+
+        sleep 1
+        ((++counter))
+    done
+}
+
+task_http_wait "$@"

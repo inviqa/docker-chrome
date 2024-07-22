@@ -1,0 +1,11 @@
+FROM curlimages/curl:latest
+
+USER root
+RUN apk add bash
+
+USER curl_user
+
+COPY root /
+
+ENTRYPOINT /usr/local/bin/wait-for http://chromium:9222 --header 'Host: 127.0.0.1' && exec /bin/sh -c "$@"
+CMD curl --fail --header 'Host: 127.0.0.1' http://chromium:9222/json/version

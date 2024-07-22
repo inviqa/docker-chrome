@@ -2,3 +2,10 @@ services:
   chromium:
     build: .
     image: quay.io/inviqa_images/chromium:latest${TAG_SUFFIX:-}
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    links:
+      - chromium:chromium
