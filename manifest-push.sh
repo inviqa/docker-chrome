@@ -8,14 +8,18 @@ for IMAGE in $(docker compose config --format json | jq -r 'try .services[].imag
     if [ -z "$IMAGE" ] || [ "$IMAGE" = null ]; then
         continue
     fi
+    docker manifest rm "${IMAGE}" 2>/dev/null || true
     docker manifest create "${IMAGE}" "${IMAGE}-linux-amd64" "${IMAGE}-linux-arm64"
     docker manifest push "${IMAGE}"
+    docker manifest rm "${IMAGE}"
 done
 
 for IMAGE in $(docker compose config --format json | jq -r 'try .services[].build.tags[]'); do
     if [ -z "$IMAGE" ] || [ "$IMAGE" = null ]; then
         continue
     fi
+    docker manifest rm "${IMAGE}" 2>/dev/null || true
     docker manifest create "${IMAGE}" "${IMAGE}-linux-amd64" "${IMAGE}-linux-arm64"
     docker manifest push "${IMAGE}"
+    docker manifest rm "${IMAGE}"
 done
