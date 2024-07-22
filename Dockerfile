@@ -25,7 +25,5 @@ USER headless
 
 EXPOSE 9222
 
-ENTRYPOINT /usr/bin/dumb-init -- /bin/bash -c \
-  '/usr/bin/chromium --disable-gpu --headless --no-sandbox --disable-dev-shm-usage --remote-debugging-port=9223 --user-data-dir=/data & \
-  (/usr/local/bin/wait-for 127.0.0.1:9223 && /usr/bin/socat -v TCP4-LISTEN:9222,fork,reuseaddr TCP4:127.0.0.1:9223) & \
-  wait'
+ENTRYPOINT ["/usr/bin/dumb-init", "--", "/entrypoint.sh", "--user-data-dir=/data", "--disable-dev-shm-usage"]
+CMD ["--disable-gpu", "--headless", "--no-sandbox" ]
