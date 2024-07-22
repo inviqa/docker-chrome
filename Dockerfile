@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1.3-labs
-FROM debian:bullseye-slim
+ARG DISTRO_CODENAME
+FROM debian:${DISTRO_CODENAME}-slim
 
 RUN <<EOF
 set -o errexit -o nounset
